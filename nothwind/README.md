@@ -2,7 +2,7 @@
 
 The northwind.db has the following Entity Relationship Diagram which we have to keep in mind before solving the questions.
 
-![erd](https://github.com/ProPrakhar332/sql-practice/blob/main/hospital/hospital-schema.jpg)
+![erd](https://github.com/ProPrakhar332/sql-practice/blob/main/nothwind/northwind-schema.jpg)
 
 ---
 
