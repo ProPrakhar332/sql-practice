@@ -310,43 +310,90 @@ Solution 2:-
 ```sql
 SELECT SUM(Gender = 'M') as male_count,
        SUM(Gender = 'F') AS female_count
-FROM patients
+FROM   patients
 ```
 
-<h3></h3>
+<h3>7. Show first and last name, allergies from patients which have allergies to either 'Penicillin' or 'Morphine'. Show results ordered ascending by allergies then by first_name then by last_name.
+</h3>
 
 ```sql
+SELECT first_name, last_name, allergies
+
+FROM   patients
+
+WHERE  allergies IN ( 'Penicillin' , 'Morphine' )
+
+ORDER BY allergies, first_name, last_name
+```
+
+<h3>8. Show patient_id, diagnosis from admissions. Find patients admitted multiple times for the same diagnosis.
+</h3>
+
+```sql
+SELECT a1.patient_id, a1.diagnosis
+
+FROM   admissions a1
+
+JOIN   admissions a2
+
+ON     a1.patient_id = a2.patient_id AND
+       a1.diagnosis = a2.diagnosis AND
+       a1.admission_date <> a2.admission_date
+
+GROUP BY a1.patient_id;
+```
+
+<h3>9. Show the city and the total number of patients in the city.
+Order from most to least patients and then by city name ascending.</h3>
+
+```sql
+SELECT city, COUNT(*) AS num_patients
+
+FROM   patients
+
+GROUP BY city
+
+ORDER BY num_patients DESC, city ASC;
 
 ```
 
-<h3></h3>
+<h3>10. Show first name, last name and role of every person that is either patient or doctor.
+The roles are either "Patient" or "Doctor"</h3>
 
 ```sql
+SELECT first_name, last_name, 'Patient' AS role
 
+FROM   patients
+
+UNION ALL
+
+SELECT first_name, last_name, 'Doctor'
+
+FROM   doctors;
 ```
 
-<h3></h3>
+<h3>11. Show all allergies ordered by popularity. Remove NULL values from query.</h3>
 
 ```sql
+SELECT allergies, COUNT(allergies) AS total_diagnosis
 
+FROM   patients
+
+WHERE allergies IS NOT NULL
+
+GROUP BY allergies
+
+ORDER BY total_diagnosis DESC;
 ```
 
-<h3></h3>
+<h3>12. Show all patient's first_name, last_name, and birth_date who were born in the 1970s decade. Sort the list starting from the earliest birth_date.</h3>
 
 ```sql
+SELECT first_name, last_name, birth_date 
 
-```
+FROM patients WHERE YEAR(birth_date) >= 1970 AND YEAR(birth_date) < 1980
 
-<h3></h3>
-
-```sql
-
-```
-
-<h3></h3>
-
-```sql
-
+ORDER BY birth_date;
 ```
 
 <h3></h3>
