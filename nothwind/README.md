@@ -1,9 +1,3 @@
-## northwind.db
-
-The northwind.db has the following Entity Relationship Diagram which we have to keep in mind before solving the questions.
-
-![erd](https://github.com/ProPrakhar332/sql-practice/blob/main/nothwind/northwind-schema.jpg)
-
 ---
 
 ### Section1: Easy
@@ -114,69 +108,4 @@ FROM    employees;
 SELECT  ROUND(AVG(unit_price),2) , SUM(units_in_stock), SUM(discontinued)
 
 FROM    products
-```
-
----
-
-### Section2: Medium
-
----
-
-<h3>1. Show the ProductName, CompanyName, CategoryName from the products, suppliers, and categories table
-</h3>
-
-```sql
-SELECT  P.product_name, S.company_name, C.category_name
-
-FROM    products P LEFT JOIN suppliers S,categories C
-
-ON      P.supplier_id = S.supplier_id AND
-
-        P.category_id = C.category_id
-```
-
-<h3>2. Show the category_name and the average product unit price for each category rounded to 2 decimal places.
-</h3>
-
-```sql
-SELECT  C.category_name, ROUND(AVG(P.unit_price),2)
-
-FROM    products P LEFT JOIN categories C 
-
-ON      P.category_id = C.category_id
-
-GROUP BY C.category_name
-```
-
-<h3>3. Show the city, company_name, contact_name from the customers and suppliers table merged together.
-Create a column which contains 'customers' or 'suppliers' depending on the table it came from.</h3>
-
-```sql
-SELECT   city, company_name, contact_name, "customers" AS relation FROM customers
-
-UNION
-
-SELECT   city, company_name, contact_name, "suppliers" AS relation FROM suppliers
-```
-
----
-
-### Section3: Hard
-
----
-
-<h3>1. Show the employee's first_name and last_name, a "num_orders" column with a count of the orders taken, and a column called "Shipped" that displays "On Time" if the order shipped on time and "Late" if the order shipped late.
-
-Order by employee last_name, then by first_name, and then descending by number of orders.</h3>
-
-```sql
-SELECT   E.first_name, E.last_name, COUNT(*) AS num_orders,
-         CASE WHEN O.required_date > O.shipped_date THEN "On Time" ELSE "Late" END AS shipped
-
-FROM     orders O LEFT JOIN employees E
-
-ON       O.employee_id = E.employee_id
-
-GROUP BY E.employee_id,shipped
-ORDER BY E.last_name, E.first_name, num_orders DESC
 ```
